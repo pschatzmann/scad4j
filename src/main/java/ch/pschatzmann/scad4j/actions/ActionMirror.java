@@ -1,7 +1,7 @@
 package ch.pschatzmann.scad4j.actions;
 
+import ch.pschatzmann.scad4j.ISCAD;
 import ch.pschatzmann.scad4j.SCAD;
-import ch.pschatzmann.scad4j.d1.ISCAD;
 
 /*
  * Mirrors the child element on a plane through the origin. The argument to mirror() 

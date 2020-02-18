@@ -9,7 +9,6 @@ import java.net.URL;
 import ch.pschatzmann.scad4j.d1.Comment;
 import ch.pschatzmann.scad4j.d1.Echo;
 import ch.pschatzmann.scad4j.d1.Group;
-import ch.pschatzmann.scad4j.d1.ISCAD;
 import ch.pschatzmann.scad4j.d1.Parameters;
 import ch.pschatzmann.scad4j.d2.Circle;
 import ch.pschatzmann.scad4j.d2.Ellipse;
@@ -38,6 +37,7 @@ import ch.pschatzmann.scad4j.format.OpenJSCADFormatter;
 public class SCAD implements Serializable {
 	private static IFormatter formatter = new OpenJSCADFormatter();
 	private static String VERSION = "V0.1";
+	private static boolean isDisply3D = true;
 	private Parameters parameters = new Parameters();
 
 	/**
@@ -55,14 +55,6 @@ public class SCAD implements Serializable {
 		return new Cube();
 	}
 
-	/**
-	 * Factory method to create a Sphere
-	 * 
-	 * @return Sphere
-	 */
-	public Sphere spere() {
-		return new Sphere();
-	}
 
 	/**
 	 * Factory method to create a Cylinder
@@ -155,6 +147,46 @@ public class SCAD implements Serializable {
 	};
 
 	/**
+	 * Combined objects with the help of hull(). We apply a hull for
+	 * each segment of the indicated objects.
+	 * @param obj
+	 * @return
+	 */
+	public ISCAD hull(ISCAD... obj) {
+		 Group in = new Group().objects(obj);
+		 Group result = new Group();
+		 for (int j=1;j<in.getObjects().size();j++) {
+			 Group mg = new Group().add(in.getObjects().get(j-1), in.getObjects().get(j));
+			 mg.hull();
+			 result.add(mg);
+		 }		 
+		 if (result.getObjects().isEmpty() && !in.getObjects().isEmpty()) {
+			 result.add(in.getObjects().get(0));
+		 }
+		 return result;
+	};
+	
+	/**
+	 * Combined objects with the help of hull(). We apply a hull for
+	 * each segment of the indicated objects.
+	 * @param group
+	 * @return
+	 */	
+	public ISCAD hull(Group group) {
+		return this.hull(group.getObjects().toArray(new ISCAD[group.size()]));
+	}
+
+
+	/**
+	 * Combined objects with the help of the minkowski() operation
+	 * @param obj
+	 * @return
+	 */
+	public ISCAD minkowski(ISCAD... obj) {
+		return new Group().objects(obj).hull().obj();
+	};
+
+	/**
 	 * Factory method to create a Echo
 	 * @param msg Message to echo
 	 * @return SCADObject
@@ -169,7 +201,7 @@ public class SCAD implements Serializable {
 	 * 
 	 * @return SCADObject
 	 */
-	public ISCAD commend(String comment) {
+	public ISCAD comment(String comment) {
 		return new Comment().comment(comment);
 	};
 
@@ -433,6 +465,7 @@ public class SCAD implements Serializable {
 	public Object mime(File content) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, IOException {
 		return Mime.display(content);
 	}
+	
 
 	/**
 	 * Prints the version information
@@ -440,6 +473,22 @@ public class SCAD implements Serializable {
 	@Override
 	public String toString() {
 		return   "scad4j " + VERSION;
+	}
+
+	/**
+	 * By default the display command is returning a 3d image. 
+	 * @return
+	 */
+	public static boolean isDisplay3D() {
+		return isDisply3D ;
+	}
+	
+	/**
+	 * Defines if a display is rendering a 3D object or a simple 2D image
+	 * @param is3D
+	 */
+	public static void setDisplay3D(boolean is3D) {
+		isDisply3D = is3D;
 	}
 
 }

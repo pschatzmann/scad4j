@@ -28,10 +28,10 @@ import ch.pschatzmann.scad4j.actions.ActionRotate;
 import ch.pschatzmann.scad4j.actions.ActionScale;
 import ch.pschatzmann.scad4j.actions.ActionTranslate;
 import ch.pschatzmann.scad4j.actions.ActionUnion;
-import ch.pschatzmann.scad4j.d1.ISCAD;
 import ch.pschatzmann.scad4j.format.IFormatter;
 import ch.pschatzmann.scad4j.format.Mime;
 import ch.pschatzmann.scad4j.format.OpenJSCADFormatter;
+import ch.pschatzmann.scad4j.format.OpenSCADFormatter;
 import ch.pschatzmann.scad4j.format.Utils;
 import ch.pschatzmann.scad4j.mesh.Mesh;
 import ch.pschatzmann.scad4j.mesh.STL;
@@ -95,7 +95,7 @@ public class SCAD4JObject implements ISCAD {
 	 */
 	@Override
 	public BufferedImage toImage(String format) throws IOException, InterruptedException {
-		OpenJSCADFormatter f = new OpenJSCADFormatter();
+		IFormatter f = SCAD.getFormatter();
 		InputStream is = f.formatToStream(this,format);
 		BufferedImage image = ImageIO.read(is);	
 		is.close();
@@ -334,7 +334,7 @@ public class SCAD4JObject implements ISCAD {
 	@Override
 	public Object display() {
 		try {
-			return Mime.display("model/stl", this.toSTL());
+			return SCAD.isDisplay3D() ? Mime.display("model/stl", this.toSTL()) : this.toPNG();
 		} catch (ClassNotFoundException ex) {
 			System.err.println(ex.getMessage());
 			return "This method is only supported in BeakerX";

@@ -3,7 +3,6 @@ package ch.pschatzmann.scad4j;
 import org.junit.Test;
 
 import ch.pschatzmann.scad4j.SCAD;
-import ch.pschatzmann.scad4j.d1.ISCAD;
 
 /**
  * Unit tests for Actions
@@ -18,15 +17,16 @@ public class TestActions {
 		ISCAD obj = s.union(
 			s.difference(
 				s.cube().size(3).center(),
-				s.sphere().radius(3).center()
+				s.sphere().radius(3)
 			),
 			s.intersection(
-				s.sphere().radius(1.3).center(),
+				s.sphere().radius(1.3),
 				s.cube().size(2.1).center()
 			)
 		).translate().values(0.0, 0.0, 1.5).obj().scale().values(10.0).obj();
 		
 		System.out.println(obj);
 	}
+	
 
 }

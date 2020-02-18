@@ -1,6 +1,6 @@
 package ch.pschatzmann.scad4j.actions;
 
-import ch.pschatzmann.scad4j.d1.ISCAD;
+import ch.pschatzmann.scad4j.ISCAD;
 
 /**
  * Rotational extrusion spins a 2D shape around the Z-axis to form a solid which

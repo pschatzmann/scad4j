@@ -19,6 +19,7 @@ import ch.pschatzmann.scad4j.d1.Parameters;
  */
 public class SCADObject extends SCAD4JObject {
 	private String commands;
+	private String entryPoint;
 
 	public SCADObject(){
 		super();
@@ -87,8 +88,23 @@ public class SCADObject extends SCAD4JObject {
 
 	@Override
 	public void appendSCAD(StringBuffer sb) {
-		sb.append(commands);
+		if (this.getEntryPoint()==null) {
+			appendActions(this.getActions(),sb);
+			sb.append(commands);
+		} else {
+			// remove the entry point
+			String raw = this.commands.replace(this.getEntryPoint(),"");
+			sb.append(raw);
+			// add entry point back with the relevant operations
+			sb.append(System.lineSeparator());
+			appendActions(this.getActions(),sb);
+			sb.append(" ");
+			sb.append(this.getEntryPoint());			
+			sb.append(System.lineSeparator());
+		}
 	}
+	
+	
 	
 	/**
 	 * Returns the command added to the current scad commands. The model is not updated. You might
@@ -111,10 +127,21 @@ public class SCADObject extends SCAD4JObject {
 		String newCommands = commands.replaceAll(regex,"");
 		return new SCADObject(newCommands);
 	}
-	
-	@Override
-	public String toString() {
-		return this.commands;
+
+	/**
+	 * The module call which will display the object in openscad
+	 * @return
+	 */
+	public String getEntryPoint() {
+		return entryPoint;
+	}
+
+	/**
+	 * Defines the module call which will display the object in openscad
+	 * @param entryPoint
+	 */
+	public void setEntryPoint(String entryPoint) {
+		this.entryPoint = entryPoint;
 	}
 	
 

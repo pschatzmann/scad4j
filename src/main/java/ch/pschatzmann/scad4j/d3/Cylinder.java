@@ -1,7 +1,7 @@
 package ch.pschatzmann.scad4j.d3;
 
+import ch.pschatzmann.scad4j.ISCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
-import ch.pschatzmann.scad4j.d1.ISCAD;
 import ch.pschatzmann.scad4j.d2.ICircleCommon;
 
 /**
@@ -96,8 +96,8 @@ public class Cylinder extends SCAD4JObject implements ICircleCommon {
 		append(sb,"d1",this.d1);
 		append(sb,"d2",this.d2);
 		append(sb,"$fa",this.minimumAngle);
-		append(sb,"$fs:",this.minimumCircumferentialLength);
-		append(sb,"$fn:",this.numberOfFragments);
+		append(sb,"$fs",this.minimumCircumferentialLength);
+		append(sb,"$fn",this.numberOfFragments);
 		if (this.isCenter()) {
 			append(sb,"center",this.isCenter());
 		}

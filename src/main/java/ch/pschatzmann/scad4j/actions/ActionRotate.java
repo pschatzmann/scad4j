@@ -1,6 +1,6 @@
 package ch.pschatzmann.scad4j.actions;
 
-import ch.pschatzmann.scad4j.d1.ISCAD;
+import ch.pschatzmann.scad4j.ISCAD;
 
 /**
  * Rotates its child 'a' degrees about the axis of the coordinate system or

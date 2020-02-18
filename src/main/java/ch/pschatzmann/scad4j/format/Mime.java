@@ -34,14 +34,14 @@ public class Mime {
 		return encoded ? display(mime, Utils.binaryFile2String(file)): display(mime, Utils.textFile2String(file));
 	}
 
-	public static Object display(String mime, String content) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+	public static Object display(String mime, Object content) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
 		return display(mime, content, defaultEncoded);
 	}
 	
-	public static Object display(String mime, String content, boolean encoded)
+	public static Object display(String mime, Object content, boolean encoded)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException {
-		String resultContent = encoded ? encode(content) : content;
+		Object resultContent = encoded ? encode(content) : content;
 		Class mimeContainer = Class.forName("com.twosigma.beakerx.mimetype.MIMEContainer");
 		Constructor constructor = mimeContainer.getConstructor(String.class, Object.class);
 		Object[] args = { mime, resultContent };
@@ -49,8 +49,8 @@ public class Mime {
 		return result;
 	}
 	
-	public static String encode(String obj) {
-		return Base64.getEncoder().encodeToString(obj.getBytes());
+	public static Object encode(Object obj) {
+		return obj instanceof String ? Base64.getEncoder().encodeToString(((String)obj).getBytes()) : obj;
 	}
 
 	public static String decode(String obj) {

@@ -1,7 +1,7 @@
 package ch.pschatzmann.scad4j.d3;
 
 import ch.pschatzmann.scad4j.SCAD4JObject;
-import ch.pschatzmann.scad4j.d1.ISCAD;
+import ch.pschatzmann.scad4j.ISCAD;
 import ch.pschatzmann.scad4j.SCAD;
 
 /**

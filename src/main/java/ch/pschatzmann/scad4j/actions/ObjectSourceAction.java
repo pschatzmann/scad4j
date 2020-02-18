@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Optional;
 
-import ch.pschatzmann.scad4j.d1.ISCAD;
+import ch.pschatzmann.scad4j.ISCAD;
 
 /**
  * Management of source object

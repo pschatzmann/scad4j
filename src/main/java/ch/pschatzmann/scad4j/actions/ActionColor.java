@@ -1,6 +1,6 @@
 package ch.pschatzmann.scad4j.actions;
 
-import ch.pschatzmann.scad4j.d1.ISCAD;
+import ch.pschatzmann.scad4j.ISCAD;
 
 /**
  * Displays the child elements using the specified RGB color + alpha value. This

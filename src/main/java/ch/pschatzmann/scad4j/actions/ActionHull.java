@@ -1,6 +1,6 @@
 package ch.pschatzmann.scad4j.actions;
 
-import ch.pschatzmann.scad4j.d1.ISCAD;
+import ch.pschatzmann.scad4j.ISCAD;
 
 /**
  * Displays the convex hull of child nodes.
@@ -15,7 +15,7 @@ public class ActionHull extends ActionGroup   {
 
 	@Override
 	protected String getCommand() {
-		return "hull";
+		return "hull()";
 	}
 
 }

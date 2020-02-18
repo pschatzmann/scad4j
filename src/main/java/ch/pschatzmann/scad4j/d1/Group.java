@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import ch.pschatzmann.scad4j.ISCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -61,6 +62,10 @@ public class Group extends SCAD4JObject {
 		}
 		sb.append("} ");
 
+	}
+
+	public int size() {
+		return this.objects.size();
 	}
 
 }

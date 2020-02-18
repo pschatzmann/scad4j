@@ -1,6 +1,7 @@
-ch.pschatzmann.scadjvm
-ch.pschatzmann.scadjvm.actions
-ch.pschatzmann.scadjvm.d1
-ch.pschatzmann.scadjvm.d2
-ch.pschatzmann.scadjvm.d3
-ch.pschatzmann.scadjvm.format
+ch.pschatzmann.scad4j
+ch.pschatzmann.scad4j.actions
+ch.pschatzmann.scad4j.d1
+ch.pschatzmann.scad4j.d2
+ch.pschatzmann.scad4j.d3
+ch.pschatzmann.scad4j.format
+ch.pschatzmann.scad4j.mesh

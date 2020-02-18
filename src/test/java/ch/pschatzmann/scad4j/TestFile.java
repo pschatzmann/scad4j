@@ -5,7 +5,6 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ch.pschatzmann.scad4j.d1.ISCAD;
 import ch.pschatzmann.scad4j.format.OpenSCADFormatter;
 
 
