@@ -21,12 +21,14 @@ public class SCADObject extends SCAD4JObject {
 	private String commands;
 	private String entryPoint;
 
-	public SCADObject(){
-		super();
+
+	public SCADObject(SCAD scad, String cmd){
+		super(scad);
+		this.commands = cmd;
 	}
 
-	public SCADObject(String cmd){
-		this.commands = cmd;
+	public SCADObject(SCAD scad) {
+		super(scad);
 	}
 
 	public SCADObject load(File file, Parameters parameters) throws IOException {
@@ -114,7 +116,7 @@ public class SCADObject extends SCAD4JObject {
 	 */
 	
 	public SCADObject evaluate(String command) {
-		return new SCADObject(this.commands + System.lineSeparator()+command);
+		return new SCADObject(this.getParent(),this.commands + System.lineSeparator()+command);
 	}
 
 	
@@ -125,7 +127,7 @@ public class SCADObject extends SCAD4JObject {
 	 */
 	public SCADObject remove(String regex) {
 		String newCommands = commands.replaceAll(regex,"");
-		return new SCADObject(newCommands);
+		return new SCADObject(this.getParent(), newCommands);
 	}
 
 	/**

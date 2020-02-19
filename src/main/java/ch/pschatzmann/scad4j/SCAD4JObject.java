@@ -28,6 +28,8 @@ import ch.pschatzmann.scad4j.actions.ActionRotate;
 import ch.pschatzmann.scad4j.actions.ActionScale;
 import ch.pschatzmann.scad4j.actions.ActionTranslate;
 import ch.pschatzmann.scad4j.actions.ActionUnion;
+import ch.pschatzmann.scad4j.d1.Module;
+import ch.pschatzmann.scad4j.d1.Modules;
 import ch.pschatzmann.scad4j.format.IFormatter;
 import ch.pschatzmann.scad4j.format.Mime;
 import ch.pschatzmann.scad4j.format.OpenJSCADFormatter;
@@ -43,8 +45,26 @@ import ch.pschatzmann.scad4j.mesh.STL;
  *
  */
 public class SCAD4JObject implements ISCAD {
-	boolean center = false;
-	List<ISCAD> actions = new ArrayList();
+	private boolean center = false;
+	private List<ISCAD> actions = new ArrayList();
+	private SCAD scad;
+	private String name;
+	
+	protected SCAD4JObject(SCAD scad){
+		this.scad = scad;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public SCAD getParent() {
+		return this.scad;
+	}
 	
 	/**
 	 * Centers the object (center = true)
@@ -353,6 +373,31 @@ public class SCAD4JObject implements ISCAD {
 		return this;
 	}
 
+	/**
+	 * Register the object as a module and returns a reference
+	 * @param name
+	 * @return
+	 */
+	public ISCAD toModule(String name) {
+		Modules modules = getParent().modules();
+		modules.add(name, this.obj());
+		this.setName(name);
+		clearActions();
+		return modules.ref(name);
+	}
+	
+	public ISCAD clearActions() {
+		this.actions.clear();
+		return this;
+	}
+
+	public ISCAD copy() {
+		SCADObject result = new SCADObject(this.getParent(), this.toString());
+		result.setEntryPoint(this.getEntryPoint());
+		return result;
+	}
+
+	
 	public void appendActions(List<ISCAD> actions, StringBuffer sb) {
 		actions.forEach(a -> a.appendSCAD(sb));
 	};
@@ -362,9 +407,17 @@ public class SCAD4JObject implements ISCAD {
 	 */
 	@Override
 	public String toString() {
+		return toString(true);
+	}
+
+	public String toString(boolean withModules) {
 		StringBuffer sb = new StringBuffer();
+		if (withModules && this.getName()!=null) {
+			this.getParent().modules().appendSCAD(null, sb);
+		}
+		
 		appendSCAD(sb);
-		return sb.toString();
+		return Utils.format(sb.toString());
 	}
 
 

@@ -9,6 +9,7 @@ import java.net.URL;
 import ch.pschatzmann.scad4j.d1.Comment;
 import ch.pschatzmann.scad4j.d1.Echo;
 import ch.pschatzmann.scad4j.d1.Group;
+import ch.pschatzmann.scad4j.d1.Modules;
 import ch.pschatzmann.scad4j.d1.Parameters;
 import ch.pschatzmann.scad4j.d2.Circle;
 import ch.pschatzmann.scad4j.d2.Ellipse;
@@ -39,7 +40,8 @@ public class SCAD implements Serializable {
 	private static String VERSION = "V0.1";
 	private static boolean isDisply3D = true;
 	private Parameters parameters = new Parameters();
-
+	private Modules modules = new Modules(this, this.parameters);
+	
 	/**
 	 * Default Constructor
 	 */
@@ -52,7 +54,7 @@ public class SCAD implements Serializable {
 	 * @return Cube
 	 */
 	public Cube cube() {
-		return new Cube();
+		return new Cube(this);
 	}
 
 
@@ -62,7 +64,7 @@ public class SCAD implements Serializable {
 	 * @return Cylinder
 	 */
 	public Cylinder cylinder() {
-		return new Cylinder();
+		return new Cylinder(this);
 	}
 
 	/**
@@ -71,7 +73,7 @@ public class SCAD implements Serializable {
 	 * @return Polyhedron
 	 */
 	public Polyhedron polyhedron() {
-		return new Polyhedron();
+		return new Polyhedron(this);
 	}
 
 	/**
@@ -80,7 +82,7 @@ public class SCAD implements Serializable {
 	 * @return Sphere
 	 */
 	public Sphere sphere() {
-		return new Sphere();
+		return new Sphere(this);
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class SCAD implements Serializable {
 	 * @return Circle
 	 */
 	public Circle circle() {
-		return new Circle();
+		return new Circle(this);
 	}
 
 	/**
@@ -98,7 +100,7 @@ public class SCAD implements Serializable {
 	 * @return Ellipse
 	 */
 	public Ellipse ellipse() {
-		return new Ellipse();
+		return new Ellipse(this);
 	}
 
 	/**
@@ -107,7 +109,7 @@ public class SCAD implements Serializable {
 	 * @return RegularPolygon
 	 */
 	public RegularPolygon regularPolygon() {
-		return new RegularPolygon();
+		return new RegularPolygon(this);
 	};
 
 	/**
@@ -116,7 +118,7 @@ public class SCAD implements Serializable {
 	 * @return Polygon
 	 */
 	public Polygon polygon() {
-		return new Polygon();
+		return new Polygon(this);
 	};
 
 	/**
@@ -125,7 +127,7 @@ public class SCAD implements Serializable {
 	 * @return Square
 	 */
 	public Square square() {
-		return new Square();
+		return new Square(this);
 	};
 
 	/**
@@ -134,7 +136,7 @@ public class SCAD implements Serializable {
 	 * @return Text
 	 */
 	public Text text() {
-		return new Text();
+		return new Text(this);
 	};
 
 	/**
@@ -143,7 +145,7 @@ public class SCAD implements Serializable {
 	 * @return Group
 	 */
 	public Group group(ISCAD... obj) {
-		return new Group().objects(obj);
+		return new Group(this).objects(obj);
 	};
 
 	/**
@@ -153,10 +155,10 @@ public class SCAD implements Serializable {
 	 * @return
 	 */
 	public ISCAD hull(ISCAD... obj) {
-		 Group in = new Group().objects(obj);
-		 Group result = new Group();
+		 Group in = new Group(this).objects(obj);
+		 Group result = new Group(this);
 		 for (int j=1;j<in.getObjects().size();j++) {
-			 Group mg = new Group().add(in.getObjects().get(j-1), in.getObjects().get(j));
+			 Group mg = new Group(this).add(in.getObjects().get(j-1), in.getObjects().get(j));
 			 mg.hull();
 			 result.add(mg);
 		 }		 
@@ -183,7 +185,7 @@ public class SCAD implements Serializable {
 	 * @return
 	 */
 	public ISCAD minkowski(ISCAD... obj) {
-		return new Group().objects(obj).hull().obj();
+		return new Group(this).objects(obj).hull().obj();
 	};
 
 	/**
@@ -192,7 +194,7 @@ public class SCAD implements Serializable {
 	 * @return SCADObject
 	 */
 	public ISCAD echo(String msg) {
-		return new Echo().value(msg);
+		return new Echo(this).value(msg);
 	};
 
 	/**
@@ -202,7 +204,7 @@ public class SCAD implements Serializable {
 	 * @return SCADObject
 	 */
 	public ISCAD comment(String comment) {
-		return new Comment().comment(comment);
+		return new Comment(this).comment(comment);
 	};
 
 	/**
@@ -213,7 +215,7 @@ public class SCAD implements Serializable {
 	 * @return SCADObject
 	 */
 	public SCADObject scad(File file, Parameters parameters) throws IOException {
-		return new SCADObject().load(file, parameters);
+		return new SCADObject(this).load(file, parameters);
 	};
 	/**
 	 * 
@@ -222,7 +224,7 @@ public class SCAD implements Serializable {
 	 * @throws IOException
 	 */
 	public SCADObject scad(File file) throws IOException {
-		return new SCADObject().load(file, this.parameters);		
+		return new SCADObject(this).load(file, this.parameters);		
 	}
 
 	/**
@@ -235,7 +237,7 @@ public class SCAD implements Serializable {
 	 * @throws IOException
 	 */
 	public SCADObject scad(URL url, Parameters parameters) throws IOException {
-		return new SCADObject().load(url, parameters);
+		return new SCADObject(this).load(url, parameters);
 	};
 
 	/**
@@ -247,7 +249,7 @@ public class SCAD implements Serializable {
 	 * @throws IOException
 	 */
 	public SCADObject scad(URL url) throws IOException {
-		return new SCADObject().load(url, this.parameters);
+		return new SCADObject(this).load(url, this.parameters);
 	};
 	
 	/**
@@ -257,7 +259,7 @@ public class SCAD implements Serializable {
 	 * @return SCADObject
 	 */
 	public SCADObject scad(String scadCommands) {
-		return new SCADObject().setSCAD(scadCommands);
+		return new SCADObject(this).setSCAD(scadCommands);
 	};
 
 	/**
@@ -316,7 +318,7 @@ public class SCAD implements Serializable {
 	 * @return SCADObject
 	 */
 	public ISCAD union(ISCAD... objects) {
-		return new Group().objects(objects).union().obj();
+		return new Group(this).objects(objects).union().obj();
 	}
 
 	/**
@@ -326,7 +328,7 @@ public class SCAD implements Serializable {
 	 * @return SCADObject
 	 */
 	public ISCAD intersection(ISCAD... objects) {
-		return new Group().objects(objects).intersection().obj();
+		return new Group(this).objects(objects).intersection().obj();
 	}
 
 	/**
@@ -336,7 +338,7 @@ public class SCAD implements Serializable {
 	 * @return SCADObject
 	 */
 	public ISCAD difference(ISCAD... objects) {
-		return new Group().objects(objects).difference().obj();
+		return new Group(this).objects(objects).difference().obj();
 	}
 	
 	/**
@@ -468,14 +470,6 @@ public class SCAD implements Serializable {
 	
 
 	/**
-	 * Prints the version information
-	 */
-	@Override
-	public String toString() {
-		return   "scad4j " + VERSION;
-	}
-
-	/**
 	 * By default the display command is returning a 3d image. 
 	 * @return
 	 */
@@ -490,5 +484,23 @@ public class SCAD implements Serializable {
 	public static void setDisplay3D(boolean is3D) {
 		isDisply3D = is3D;
 	}
+	
+	/**
+	 * Factory method for a new Modules object
+	 * @return
+	 */
+	public Modules modules() {
+		return this.modules;
+	}
+
+	/**
+	 * Prints the version information
+	 */
+	@Override
+	public String toString() {
+		return   "scad4j " + VERSION;
+	}
+
+
 
 }

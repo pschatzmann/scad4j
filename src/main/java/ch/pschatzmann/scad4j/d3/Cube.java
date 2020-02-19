@@ -14,6 +14,10 @@ import ch.pschatzmann.scad4j.SCAD;
  */
 public class Cube extends SCAD4JObject {
 	private Double x,y,z;
+
+	public Cube(SCAD scad) {
+		super(scad);
+	}
 	
 	public ISCAD size(double size) {
 		this.x = size;

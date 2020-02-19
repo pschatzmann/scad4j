@@ -1,5 +1,6 @@
 package ch.pschatzmann.scad4j.d2;
 
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -9,6 +10,7 @@ import ch.pschatzmann.scad4j.SCAD4JObject;
  *
  */
 public class Text extends SCAD4JObject {
+
 	public enum HorizontalAligh {
 		left, center, right
 	}
@@ -32,6 +34,11 @@ public class Text extends SCAD4JObject {
 	private String script;
 	private boolean first = true;
 
+	public Text(SCAD scad) {
+		super(scad);
+	}
+
+	
 	public Text text(String text) {
 		this.text = text;
 		return this;

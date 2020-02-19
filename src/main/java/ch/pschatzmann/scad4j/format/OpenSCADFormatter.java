@@ -13,7 +13,9 @@ import java.util.Map;
 import ch.pschatzmann.scad4j.ISCAD;
 
 /**
- * Formatter using the OpenSCAD command line to convert the data
+ * Formatter using the OpenSCAD command line to convert the data. You can define
+ * the following env varialbes: openscad_2d_support (default true).
+ * openscad_path (default openscad)
  * 
  * @author pschatzmann
  *
@@ -21,10 +23,10 @@ import ch.pschatzmann.scad4j.ISCAD;
 public class OpenSCADFormatter implements IFormatter {
 	private String command = "openscad";
 	private static boolean isSetup = false;
-	private int Display=0;
+	private int Display = 0;
 
 	public OpenSCADFormatter() throws IOException, InterruptedException {
-		if (!isSetup && Utils.getProperty("CAD_2D_SUPPORT","true").equalsIgnoreCase("true")) {
+		if (!isSetup && Utils.getProperty("openscad_2d_support", "true").equalsIgnoreCase("true")) {
 			setup();
 		}
 	}
@@ -46,7 +48,7 @@ public class OpenSCADFormatter implements IFormatter {
 	protected void execOpenSCAD(File input, File output) throws IOException, InterruptedException {
 		String cmd = Utils.getProperty("openscad_path", command) + " -o " + output.getAbsolutePath() + " "
 				+ input.getAbsolutePath();
-		String[] envp = { "DISPLAY=:"+Display };
+		String[] envp = { "DISPLAY=:" + Display };
 		Process p = Runtime.getRuntime().exec(cmd, envp);
 		Utils.displayErrors(p);
 	}
@@ -54,23 +56,23 @@ public class OpenSCADFormatter implements IFormatter {
 	protected void setup() {
 		(new Thread() {
 			public void run() {
-					try {
-						isSetup = true;
-						String cmd = "xdpyinfo -display :"+Display;
-						Process pCheck = Runtime.getRuntime().exec(cmd);
-						String status = getOutput(pCheck);						
-						if (status.indexOf("unable to open")>0) {
-							Process p = Runtime.getRuntime().exec("Xvfb :"+Display+" -screen 0 800x600x24 ");
-							// if we get here the process has ended
-							Utils.displayErrors(p);						
-							isSetup = false;
-						}
-					} catch (Exception ex) {
-						System.err.println("Please make sure that xvfb is installed");
-						ex.printStackTrace();
+				try {
+					isSetup = true;
+					String cmd = "xdpyinfo -display :" + Display;
+					Process pCheck = Runtime.getRuntime().exec(cmd);
+					String status = getOutput(pCheck);
+					if (status.indexOf("unable to open") > 0) {
+						Process p = Runtime.getRuntime().exec("Xvfb :" + Display + " -screen 0 800x600x24 ");
+						// if we get here the process has ended
+						Utils.displayErrors(p);
 						isSetup = false;
 					}
-				
+				} catch (Exception ex) {
+					System.err.println("Please make sure that xvfb is installed");
+					ex.printStackTrace();
+					isSetup = false;
+				}
+
 			}
 
 			public String getOutput(Process p) throws IOException {

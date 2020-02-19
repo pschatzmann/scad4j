@@ -1,6 +1,7 @@
 package ch.pschatzmann.scad4j.d1;
 
 import ch.pschatzmann.scad4j.ISCAD;
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -10,6 +11,10 @@ import ch.pschatzmann.scad4j.SCAD4JObject;
  */
 public class Echo extends SCAD4JObject {
 	private String echo;
+
+	public Echo(SCAD scad) {
+		super(scad);
+	}
 	
 	public ISCAD value(String value) {
 		// escape " characters

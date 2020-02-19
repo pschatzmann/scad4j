@@ -23,20 +23,17 @@ import ch.pschatzmann.scad4j.actions.ActionRotate;
 import ch.pschatzmann.scad4j.actions.ActionScale;
 import ch.pschatzmann.scad4j.actions.ActionTranslate;
 import ch.pschatzmann.scad4j.actions.ActionUnion;
+import ch.pschatzmann.scad4j.d1.Module;
 
 public interface ISCAD extends Serializable {
 
-	public ISCAD obj();
+	ISCAD obj();
 	
-
-	/**
-	 * Saves the object to a SCAD file
-	 * 
-	 * @param out Output File
-	 * 
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
+	ISCAD toModule(String name);
+	
+	SCAD getParent();
+	
+	String getName();
 
 	File save(File out) throws IOException, InterruptedException;
 
@@ -113,20 +110,13 @@ public interface ISCAD extends Serializable {
 	@Override
 	String toString();
 	
-	/**
-	 * Creates a copy of the object
-	 * @return
-	 */
-	default public ISCAD copy() {
-		SCADObject result = new SCADObject(this.toString());
-		result.setEntryPoint(this.getEntryPoint());
-		return result;
-	}
+	String toString(boolean withModules);
 	
 	default public void setEntryPoint(String ep) {}
 	
 	default public String getEntryPoint() {
 		return null;
 	}
+
 
 }

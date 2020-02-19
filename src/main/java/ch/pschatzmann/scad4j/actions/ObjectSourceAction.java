@@ -13,17 +13,11 @@ import ch.pschatzmann.scad4j.ISCAD;
  * @author pschatzmann
  *
  */
-public abstract class ObjectSourceAction implements ISCAD {
-	private ISCAD obj;
+public abstract class ObjectSourceAction extends CommonAction implements ISCAD {
 	
 	public ObjectSourceAction(ISCAD obj){
-		this.obj = obj.obj();
-		this.obj.addAction(this);
-	}
-
-	@Override
-	public ISCAD obj() {
-		return obj;
+		super(obj);
+		obj.addAction(this);
 	}
 	
 	@Override

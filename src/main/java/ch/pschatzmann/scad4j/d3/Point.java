@@ -2,8 +2,13 @@ package ch.pschatzmann.scad4j.d3;
 
 import java.io.Serializable;
 
+import ch.pschatzmann.scad4j.SCAD;
+
 public class Point implements Serializable {
 	private Double x,y,z;
+
+	public Point() {
+	}
 
 	public Point value(Double values[]) {
 		switch(values.length) {

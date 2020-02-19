@@ -1,5 +1,6 @@
 package ch.pschatzmann.scad4j.d3;
 
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -16,6 +17,10 @@ public class Polyhedron extends SCAD4JObject {
 	private Face faces[];
 	private Integer convexity;
 	boolean addSeparator=false;
+
+	public Polyhedron(SCAD scad) {
+		super(scad);
+	}
 
 	public Polyhedron points(Point... point) {
 		this.points = point;

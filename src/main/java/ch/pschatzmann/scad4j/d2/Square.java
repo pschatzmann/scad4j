@@ -1,5 +1,6 @@
 package ch.pschatzmann.scad4j.d2;
 
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -13,6 +14,10 @@ import ch.pschatzmann.scad4j.SCAD4JObject;
 public class Square extends SCAD4JObject {
 	private double x;
 	private double y;
+
+	public Square(SCAD scad) {
+		super(scad);
+	}
 
 	public Square size(double size) {
 		y = size;

@@ -1,5 +1,6 @@
 package ch.pschatzmann.scad4j.d2;
 
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -9,6 +10,10 @@ import ch.pschatzmann.scad4j.SCAD4JObject;
  *
  */
 public class Circle extends SCAD4JObject implements ICircleCommon {
+	public Circle(SCAD scad) {
+		super(scad);
+	}
+
 	private Double radius;
 	private Double diameter;
 	private Double minimumAngle;

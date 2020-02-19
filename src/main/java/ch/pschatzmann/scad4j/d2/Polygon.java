@@ -1,5 +1,6 @@
 package ch.pschatzmann.scad4j.d2;
 
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 import ch.pschatzmann.scad4j.d3.Point;
 
@@ -17,6 +18,10 @@ public class Polygon extends SCAD4JObject {
 	private Point points[];
 	private Integer paths[][];
 	private Integer convexity = 1;
+
+	public Polygon(SCAD scad) {
+		super(scad);
+	}
 
 	Polygon points(Point... points) {
 		this.points = points;

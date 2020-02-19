@@ -2,9 +2,12 @@ package ch.pschatzmann.scad4j.d1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ch.pschatzmann.scad4j.ISCAD;
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -16,6 +19,10 @@ import ch.pschatzmann.scad4j.SCAD4JObject;
 public class Group extends SCAD4JObject {
 	private List<ISCAD> objects = new ArrayList();
 
+	public Group(SCAD scad) {
+		super(scad);
+	}
+
 	/**
 	 * Sets the objects in this group
 	 * 
@@ -24,7 +31,7 @@ public class Group extends SCAD4JObject {
 	 */
 	public Group objects(ISCAD... objects) {
 		this.objects.clear();
-		this.objects.addAll(Arrays.asList(objects));
+		this.objects.addAll(unwrap(Arrays.asList(objects)));
 		return this;
 	}
 
@@ -36,10 +43,10 @@ public class Group extends SCAD4JObject {
 	 */
 
 	public Group add(ISCAD... obj) {
-		this.objects.addAll(Arrays.asList(obj));
+		this.objects.addAll(unwrap(Arrays.asList(obj)));
 		return this;
 	}
-
+	
 	/**
 	 * Returns the currently defined objects
 	 * 
@@ -49,6 +56,9 @@ public class Group extends SCAD4JObject {
 		return this.objects;
 	}
 
+	protected List<ISCAD> unwrap(Collection<ISCAD> c) {
+		return c.stream().map(obj -> obj.obj()).collect(Collectors.toList());
+	}
 
 
 	@Override
@@ -60,6 +70,7 @@ public class Group extends SCAD4JObject {
 			sb.append(System.lineSeparator());
 			a.appendSCAD(sb);
 		}
+		sb.append(System.lineSeparator());
 		sb.append("} ");
 
 	}

@@ -99,6 +99,56 @@ public class Utils {
 		stream.forEach(s -> contentBuilder.append(s).append(System.lineSeparator()));
 		return contentBuilder.toString();
 	}
+	
+	/**
+	 * Formats a test containing { } by indenting the lines
+	 * @param input
+	 * @return
+	 */
+	public static String format(String input) {
+		StringBuffer sb = new StringBuffer();
+		String ls = System.lineSeparator();
+		char lastCharLineSeparator = ls.charAt(ls.length() - 1);
+		int ident = 0;
+		
+		for (int i = 0; i < input.length(); i++){
+		    char c = input.charAt(i);        
+		    if (c=='{') {
+		    	ident++;
+		    	sb.append(c);		    	
+		    } else if (c =='}') {
+		    	ident--;
+		    	sb.append(c);		    	
+		    } else if (c == lastCharLineSeparator) {
+		    	if (nextChar(input, i+1)=='}') {		    	
+			    	sb.append(c);		    	
+		    		sb.append(spaces((ident-1) * 4));
+		    	} else {
+			    	sb.append(c);		    	
+		    		sb.append(spaces(ident * 4));		    		
+		    	}
+		    } else {
+		    	sb.append(c);		    	
+		    }
+		}
+		return sb.toString();
+		
+	}
+	
+	private static char nextChar(String input, int pos) {
+		while (pos< input.length() && input.charAt(pos)==' ') {
+			pos++;
+		}
+		return input.charAt(pos<input.length()?pos:input.length()-1);
+	}
+
+	private static String spaces(int len) {
+		StringBuffer sb = new StringBuffer();
+		for (int j=0; j<len;j++) {
+			sb.append(" ");
+		}
+		return sb.toString();
+	}
 
 
 

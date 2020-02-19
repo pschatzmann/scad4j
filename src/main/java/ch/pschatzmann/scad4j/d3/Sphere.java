@@ -1,6 +1,7 @@
 package ch.pschatzmann.scad4j.d3;
 
 import ch.pschatzmann.scad4j.ISCAD;
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -18,6 +19,11 @@ public class Sphere extends SCAD4JObject {
 	private Double fragemntSize;
 	private Double resolution;
 	private boolean addSeparator=false;
+
+	public Sphere(SCAD scad) {
+		super(scad);
+	}
+
 
 	public Sphere radius(double radius) {
 		this.radius = radius;

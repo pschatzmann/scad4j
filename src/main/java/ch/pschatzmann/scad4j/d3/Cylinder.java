@@ -1,6 +1,7 @@
 package ch.pschatzmann.scad4j.d3;
 
 import ch.pschatzmann.scad4j.ISCAD;
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 import ch.pschatzmann.scad4j.d2.ICircleCommon;
 
@@ -29,6 +30,11 @@ public class Cylinder extends SCAD4JObject implements ICircleCommon {
 	private Double numberOfFragments; // : fixed number of fragments in 360 degrees. Values of 3 or more override $fa
 										// and $fs
 	private boolean addSeparator = false;
+
+	public Cylinder(SCAD scad) {
+		super(scad);
+	}
+
 
 	@Override
 	public ISCAD minimumAngle(double minimumAngle) {

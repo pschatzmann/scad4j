@@ -1,5 +1,6 @@
 package ch.pschatzmann.scad4j.d2;
 
+import ch.pschatzmann.scad4j.SCAD;
 import ch.pschatzmann.scad4j.SCAD4JObject;
 
 /**
@@ -15,6 +16,10 @@ public class RegularPolygon extends SCAD4JObject {
 	private double radius;
 	private int numberOfSides = 5;
 
+	public RegularPolygon(SCAD scad) {
+		super(scad);
+	}
+
 	public RegularPolygon radius(double radius) {
 		this.radius = radius;
 		return this;
@@ -28,7 +33,7 @@ public class RegularPolygon extends SCAD4JObject {
 	@Override
 	public void appendSCAD(StringBuffer sb) {
 		appendActions(this.getActions(),sb);
-		new Circle().radius(radius).numberOfFragments(numberOfSides).appendSCAD(sb);
+		new Circle(this.getParent()).radius(radius).numberOfFragments(numberOfSides).appendSCAD(sb);
 	}
 
 }
