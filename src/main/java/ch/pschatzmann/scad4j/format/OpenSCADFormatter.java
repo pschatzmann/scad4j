@@ -24,7 +24,7 @@ public class OpenSCADFormatter implements IFormatter {
 	private int Display=0;
 
 	public OpenSCADFormatter() throws IOException, InterruptedException {
-		if (!isSetup) {
+		if (!isSetup && Utils.getProperty("CAD_2D_SUPPORT","true").equalsIgnoreCase("true")) {
 			setup();
 		}
 	}
@@ -44,7 +44,7 @@ public class OpenSCADFormatter implements IFormatter {
 	}
 
 	protected void execOpenSCAD(File input, File output) throws IOException, InterruptedException {
-		String cmd = Utils.getCommand("openscad_path", command) + " -o " + output.getAbsolutePath() + " "
+		String cmd = Utils.getProperty("openscad_path", command) + " -o " + output.getAbsolutePath() + " "
 				+ input.getAbsolutePath();
 		String[] envp = { "DISPLAY=:"+Display };
 		Process p = Runtime.getRuntime().exec(cmd, envp);
@@ -56,7 +56,6 @@ public class OpenSCADFormatter implements IFormatter {
 			public void run() {
 					try {
 						isSetup = true;
-						
 						String cmd = "xdpyinfo -display :"+Display;
 						Process pCheck = Runtime.getRuntime().exec(cmd);
 						String status = getOutput(pCheck);						

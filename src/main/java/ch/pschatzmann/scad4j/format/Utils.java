@@ -25,7 +25,7 @@ public class Utils {
 		return str == null || str.isEmpty();
 	}
 
-	public static String getCommand(String env, String defaultCommand) {
+	public static String getProperty(String env, String defaultCommand) {
 		String command = defaultCommand;
 		String p = System.getenv(env);
 		if (p != null && !p.isEmpty()) {

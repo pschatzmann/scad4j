@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+    beaker-cad:
+      image: pschatzmann/cad:latest
+      container_name: cad
+      ports:
+        - "8880:8888"
+      restart: always

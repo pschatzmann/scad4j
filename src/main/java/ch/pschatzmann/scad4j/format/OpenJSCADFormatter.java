@@ -35,7 +35,7 @@ public class OpenJSCADFormatter implements IFormatter {
 		if (!isInstalled()) {
 			install();
 		}
-		Utils.execCommand(Utils.getCommand("openjscad_path",command), scadFile, resultFile);
+		Utils.execCommand(Utils.getProperty("openjscad_path",command), scadFile, resultFile);
 	}
 
 	/**
