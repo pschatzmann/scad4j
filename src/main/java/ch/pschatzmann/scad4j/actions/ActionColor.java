@@ -1,6 +1,7 @@
 package ch.pschatzmann.scad4j.actions;
 
 import ch.pschatzmann.scad4j.ISCAD;
+import ch.pschatzmann.scad4j.format.Utils;
 
 /**
  * Displays the child elements using the specified RGB color + alpha value. This
@@ -13,20 +14,20 @@ import ch.pschatzmann.scad4j.ISCAD;
  */
 
 public class ActionColor extends ObjectSourceAction {
-	private String str = "";
-	private Double r, g, b, alpha;
+	private Object str = "";
+	private Object r, g, b, alpha;
 
 	public ActionColor(ISCAD obj) {
 		super(obj);
 	}
 
-	public ActionColor values(String name, Double alpha) {
+	public ActionColor values(Object name, Object alpha) {
 		this.str = name;
 		this.alpha = alpha;
 		return this;
 	}
 
-	public ActionColor values(double r, double g, double b, double alpha) {
+	public ActionColor values(Object r, Object g, Object b, Object alpha) {
 		this.r = r;
 		this.g = g;
 		this.b = b;
@@ -34,7 +35,7 @@ public class ActionColor extends ObjectSourceAction {
 		return this;
 	}
 
-	public ActionColor values(String hexValue) {
+	public ActionColor values(Object hexValue) {
 		this.str = hexValue;
 		return this;
 	}
@@ -42,7 +43,7 @@ public class ActionColor extends ObjectSourceAction {
 	@Override
 	public void appendSCAD(StringBuffer sb) {
 		sb.append(" color(");
-		if (str != null && !str.isEmpty()) {
+		if (str != null && !Utils.isEmpty(str)) {
 			sb.append("\"");
 			sb.append(str);
 			sb.append("\"");

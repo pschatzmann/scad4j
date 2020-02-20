@@ -19,7 +19,7 @@ public class TestFile {
 	public void test3DSVG() throws Exception {
 		SCAD scad = new SCAD();
 		//scad.setFormatter(new OpenJSCADFormatterJS());
-		ISCAD cube = scad.cube().size(10);
+		ISCAD cube = scad.cube().size(10.0);
 		File result = cube.save(new File("testCube.scad"));
 		Assert.assertTrue(result.exists());
 		result.delete();
@@ -31,7 +31,7 @@ public class TestFile {
 	public void testSTL() throws Exception {
 		SCAD.setFormatter(new OpenSCADFormatter());
 		SCAD scad = new SCAD();
-		ISCAD cube = scad.cube().size(10);
+		ISCAD cube = scad.cube().size(10.0);
 		System.out.println(cube.toSTL());
 
 	}

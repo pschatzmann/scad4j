@@ -21,8 +21,8 @@ import java.util.stream.Stream;
 
 public class Utils {
 
-	public static boolean isEmpty(String str) {
-		return str == null || str.isEmpty();
+	public static boolean isEmpty(Object str) {
+		return str == null || str.toString().isEmpty();
 	}
 
 	public static String getProperty(String env, String defaultCommand) {
@@ -148,6 +148,14 @@ public class Utils {
 			sb.append(" ");
 		}
 		return sb.toString();
+	}
+
+	public static String[] toStringArray(Object[] x) {
+		String result[] = new String[x.length];
+		for (int j=0;j<x.length;j++) {
+			result[j]=String.valueOf(x[j]);
+		}
+		return result;
 	}
 
 

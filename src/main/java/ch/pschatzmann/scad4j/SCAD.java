@@ -2,13 +2,19 @@ package ch.pschatzmann.scad4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
+import ch.pschatzmann.scad4j.d1.Command;
 import ch.pschatzmann.scad4j.d1.Comment;
 import ch.pschatzmann.scad4j.d1.Echo;
 import ch.pschatzmann.scad4j.d1.Group;
+import ch.pschatzmann.scad4j.d1.Import;
 import ch.pschatzmann.scad4j.d1.Modules;
 import ch.pschatzmann.scad4j.d1.Parameters;
 import ch.pschatzmann.scad4j.d2.Circle;
@@ -261,6 +267,15 @@ public class SCAD implements Serializable {
 	public SCADObject scad(String scadCommands) {
 		return new SCADObject(this).setSCAD(scadCommands);
 	};
+	
+	/**
+	 * Factory method to create a Command
+	 * 
+	 * @return Command
+	 */
+	public Command command(String command) {
+		return new Command(this, command);
+	}
 
 	/**
 	 * Converts a 2 dimensionsl array to an array of points
@@ -268,10 +283,10 @@ public class SCAD implements Serializable {
 	 * @param values 2 Dimensional Double array
 	 * @return Point array
 	 */
-	public Point[] points(Double[][] values) {
+	public Point[] points(String[][] values) {
 		Point result[] = new Point[values.length];
 		int pos = 0;
-		for (Double[] value : values) {
+		for (String[] value : values) {
 			result[pos] = point(value);
 			pos++;
 		}
@@ -284,7 +299,7 @@ public class SCAD implements Serializable {
 	 * @param values 3Dimensional Double Array
 	 * @return Point
 	 */
-	public Point point(Double[] values) {
+	public Point point(String[] values) {
 		return new Point().value(values);
 	}
 
@@ -296,7 +311,7 @@ public class SCAD implements Serializable {
 	 * @param z
 	 * @return Point
 	 */
-	public Point point(Double x, Double y, Double z) {
+	public Point point(String x, String y, String z) {
 		return new Point().value(x, y, z);
 	}
 
@@ -307,8 +322,8 @@ public class SCAD implements Serializable {
 	 * @param y
 	 * @return Point
 	 */
-	public Point point(Double x, Double y) {
-		return new Point().value(x, y, 0.0);
+	public Point point(String x, String y) {
+		return new Point().value(x, y, "0.0");
 	}
 
 	/**
@@ -353,8 +368,32 @@ public class SCAD implements Serializable {
 	 * Adds a value to the global parameters 
 	 * @return
 	 */
-	public Parameters addParameter(String parameter,String value) {
+	public Parameters addParameter(String parameter,Object value) {
 		return this.parameters.add(parameter,value);
+	}
+
+	/**
+	 * Copies all parameters from the indicated SCAD object
+	 * @param scad
+	 * @return
+	 */
+	public Parameters addParameters(SCAD scad) {
+		return this.parameters.add(scad.getParameters());
+	}
+	/**
+	 * Adds all parameters from the indicated parameters objecgt
+	 * @param parameters
+	 * @return
+	 */
+	public Parameters addParameters(Parameters parameters) {
+		return this.parameters.add(parameters);
+	}
+	/**
+	 * Returns the parameters which are defined at the current SCAD object
+	 * @return
+	 */
+	public Parameters getParameters() {
+		return this.parameters;
 	}
 
 	/**
@@ -364,7 +403,7 @@ public class SCAD implements Serializable {
 	 * @param value Parameter value
 	 * @return SCAD
 	 */
-	public SCAD setParameterValue(String parameter, String value) {
+	public SCAD setParameterValue(String parameter, Object value) {
 		this.parameters.add(parameter, value);
 		return this;
 	}
@@ -401,7 +440,7 @@ public class SCAD implements Serializable {
 	 * @param z
 	 * @return
 	 */
-	public static String xyz(Double x, Double y, Double z) {
+	public static String xyz(Object x, Object y, Object z) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 		sb.append(x);
@@ -486,11 +525,33 @@ public class SCAD implements Serializable {
 	}
 	
 	/**
-	 * Factory method for a new Modules object
+	 * Method which provides access to the Modules which are defined for this object
 	 * @return
 	 */
 	public Modules modules() {
 		return this.modules;
+	}
+	
+	/**
+	 * Adds a import statement
+	 * @param file
+	 * @return
+	 */
+	public ISCAD importFile(File file) {
+		return new Import(this).importFile(file);
+	}
+
+	/**
+	 * Adds a import statement from a url
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 */
+	public ISCAD importURL(URL url) throws IOException {
+		InputStream in = url.openStream();
+		File file = File.createTempFile("stl-", ".tmp");
+		Files.copy(in, Paths.get(file.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
+		return new Import(this).importFile(file);
 	}
 
 	/**
@@ -500,7 +561,16 @@ public class SCAD implements Serializable {
 	public String toString() {
 		return   "scad4j " + VERSION;
 	}
-
+	
+	/**
+	 * Returns a reference to a module
+	 * @param name
+	 * @return
+	 */
+	
+	public SCADObject ref(String name) {
+		return this.modules().ref(name);
+	}
 
 
 }

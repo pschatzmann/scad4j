@@ -2,6 +2,7 @@ package ch.pschatzmann.scad4j.d1;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 /**
@@ -11,18 +12,41 @@ import java.util.TreeMap;
  *
  */
 public class Parameters {
-	private Map<String, String> map = new TreeMap();
+	private Map<String, Object> map = new TreeMap();
 	private Parameters parent;
 
+	/**
+	 * Default Constructor
+	 */
 	public Parameters(){
 		this.parent = null;
 	}
 	
+	/**
+	 * Constructor which provides some inherited parameters
+	 * @param parent
+	 */
 	public Parameters(Parameters parent){
 		this.parent = parent;
 	}
-	
-	public Parameters add(String name, String value) {
+
+	/**
+	 * Same as add
+	 * @param name
+	 * @param value
+	 * @return
+	 */
+	public Parameters addParameter(String name, Object value) {
+		return this.add(name,value);
+	}
+
+	/**
+	 * Short form to add a parameter value
+	 * @param name
+	 * @param value
+	 * @return
+	 */
+	public Parameters add(String name, Object value) {
 		map.put(name, value);
 		return this;
 	}
@@ -36,11 +60,11 @@ public class Parameters {
 	}
 
 	public String getValue(String name) {
-		String value = map.get(name);
+		Object value = map.get(name);
 		if (value==null && parent!=null) {
 			value = parent.getValue(name);
 		}
-		return value;
+		return value.toString();
 	}
 
 	/**
@@ -58,7 +82,7 @@ public class Parameters {
 				if (start >= 0 && end >= 0) {
 					StringBuffer sb = new StringBuffer();
 					sb.append(input.substring(0, start));
-					String value = map.get(key).replaceAll("\"", "");
+					String value = map.get(key).toString().replaceAll("\"", "");
 					sb.append(value);
 					sb.append(input.substring(end));
 					result = sb.toString();
@@ -123,6 +147,24 @@ public class Parameters {
 		   prefix = input.substring(0,pos-1).trim();
 		}
 		return prefix.isEmpty();
+	}
+
+	
+	public Parameters add(Parameters parameters) {
+		this.map.putAll(parameters.map);
+		return this;
+	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for (Entry<String,Object> e : map.entrySet()) {
+			sb.append(e.getKey());
+			sb.append("=");
+			sb.append(e.getValue());
+			sb.append("; ");
+		}
+		sb.append(System.lineSeparator());
+		return sb.toString();
 	}
 
 }

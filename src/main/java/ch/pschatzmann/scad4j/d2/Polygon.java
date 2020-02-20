@@ -16,8 +16,8 @@ import ch.pschatzmann.scad4j.d3.Point;
  */
 public class Polygon extends SCAD4JObject {
 	private Point points[];
-	private Integer paths[][];
-	private Integer convexity = 1;
+	private Object paths[][];
+	private Object convexity = "1";
 
 	public Polygon(SCAD scad) {
 		super(scad);
@@ -28,12 +28,12 @@ public class Polygon extends SCAD4JObject {
 		return this;
 	}
 
-	Polygon path(Integer path[][]) {
+	Polygon path(Object path[][]) {
 		this.paths = path;
 		return this;
 	}
 
-	Polygon convexity(Integer convexity) {
+	Polygon convexity(Object convexity) {
 		this.convexity = convexity;
 		return this;
 	}
@@ -57,13 +57,13 @@ public class Polygon extends SCAD4JObject {
 			sb.append(",");
 			sb.append("paths=[");
 			boolean first1 = true;
-			for (Integer path[] : paths) {
+			for (Object path[] : paths) {
 				if (!first1) {
 					sb.append("],[");	
 				}
 				boolean first2 = true;
 				sb.append("[");
-				for (Integer value : path) {
+				for (Object value : path) {
 					if (!first2) {
 						sb.append(",");						
 					}

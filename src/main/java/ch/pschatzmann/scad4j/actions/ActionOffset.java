@@ -3,17 +3,17 @@ package ch.pschatzmann.scad4j.actions;
 import ch.pschatzmann.scad4j.ISCAD;
 
 public class ActionOffset extends ActionTransform {
-	Double r, delta;
+	Object r, delta;
 
 	public ActionOffset(ISCAD obj) {
 		super(obj);
 	}
 	
-	public ActionOffset r(double r) {
+	public ActionOffset r(Object r) {
 		this.r = r;
 		return this;
 	}
-	public ActionOffset delta(double delta) {
+	public ActionOffset delta(Object delta) {
 		this.delta = delta;
 		return this;
 	}

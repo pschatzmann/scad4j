@@ -11,18 +11,18 @@ import ch.pschatzmann.scad4j.ISCAD;
  */
 public class ActionRotateExtrude extends ObjectSourceAction {
 	private ISCAD obj;
-	double angle, convexity;
+	private Object angle, convexity;
 
 	ActionRotateExtrude(ISCAD obj) {
 		super(obj);
 	}
 
-	public ActionRotateExtrude angle(double angle) {
+	public ActionRotateExtrude angle(Object angle) {
 		this.angle = angle;
 		return this;
 	}
 
-	public ActionRotateExtrude convexity(double convexity) {
+	public ActionRotateExtrude convexity(Object convexity) {
 		this.convexity = convexity;
 		return this;
 	}

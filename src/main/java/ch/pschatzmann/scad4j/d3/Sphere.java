@@ -13,34 +13,35 @@ import ch.pschatzmann.scad4j.SCAD4JObject;
  *
  */
 public class Sphere extends SCAD4JObject {
-	private Double radius;
-	private Double diameter;
-	private Double fragmentAngle;
-	private Double fragemntSize;
-	private Double resolution;
+	private Object radius;
+	private Object diameter;
+	private Object fragmentAngle;
+	private Object fragemntSize;
+	private Object resolution;
 	private boolean addSeparator=false;
+	private boolean center;
 
 	public Sphere(SCAD scad) {
 		super(scad);
 	}
 
-
-	public Sphere radius(double radius) {
+	public Sphere radius(Object radius) {
 		this.radius = radius;
 		return this;
 	}
 
-	public Sphere diameter(double diameter) {
+	public Sphere diameter(Object diameter) {
 		this.diameter = diameter;
 		return this;
 	}
 
-	public Sphere fragmentAngle(double fragmentAngle) {
+
+	public Sphere fragmentAngle(Object fragmentAngle) {
 		this.fragmentAngle = fragmentAngle;
 		return this;
 	}
 
-	public Sphere resolution(double resolution) {
+	public Sphere resolution(Object resolution) {
 		this.resolution = resolution;
 		return this;
 	}
@@ -76,12 +77,13 @@ public class Sphere extends SCAD4JObject {
 	
 	
 	/**
-	 * Centers the object (center = true)
+	 * Defines if the object is centered
+	 * @param value true if object should be centered
 	 * @return SCADObject
 	 */
-	@Override
-	public ISCAD center() {
-		throw new RuntimeException("Center not supported by Sphere");
+	public Sphere center() {
+		center = true;
+		return this;
 	}
 
 	/**
@@ -89,19 +91,17 @@ public class Sphere extends SCAD4JObject {
 	 * @param value true if object should be centered
 	 * @return SCADObject
 	 */
-	@Override
-	public ISCAD center(boolean value) {
-		throw new RuntimeException("Center not supported by Sphere");
+	public Sphere center(boolean value) {
+		center = value;
+		return this;
 	}
 
 	/**
 	 * Determines if the object is centered
 	 * @return true if it is centered
 	 */
-	@Override
 	public boolean isCenter() {
-		return false;
+		return center;
 	}
-	
 
 }

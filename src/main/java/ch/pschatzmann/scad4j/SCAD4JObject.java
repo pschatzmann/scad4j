@@ -45,56 +45,19 @@ import ch.pschatzmann.scad4j.mesh.STL;
  *
  */
 public class SCAD4JObject implements ISCAD {
-	private boolean center = false;
 	private List<ISCAD> actions = new ArrayList();
 	private SCAD scad;
-	private String name;
+	private boolean isModule = false;
 	
 	protected SCAD4JObject(SCAD scad){
 		this.scad = scad;
 	}
 	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public SCAD getParent() {
 		return this.scad;
 	}
 	
-	/**
-	 * Centers the object (center = true)
-	 * @return SCADObject
-	 */
-	@Override
-	public ISCAD center() {
-		center = true;
-		return this;
-	}
-
-	/**
-	 * Defines if the object is centered
-	 * @param value true if object should be centered
-	 * @return SCADObject
-	 */
-	@Override
-	public ISCAD center(boolean value) {
-		center = value;
-		return this;
-	}
-
-	/**
-	 * Determines if the object is centered
-	 * @return true if it is centered
-	 */
-	@Override
-	public boolean isCenter() {
-		return center;
-	}
 
 
 	/**
@@ -374,19 +337,30 @@ public class SCAD4JObject implements ISCAD {
 	}
 
 	/**
-	 * Register the object as a module and returns a reference
+	 * Register the object as a module and returns a reference. The collected 
+	 * operations on the initial object are cleared.
+	 * 
+	 */
+	public ISCAD toModule(String name) {
+		return toModule(name, true);
+	}
+	
+	/**
+	 * Register the object as a module and returns a reference. The collected 
+	 * operations on the initial object are cleared.
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public ISCAD toModule(String name) {
+	public ISCAD toModule(String name, boolean clear) {
 		Modules modules = getParent().modules();
 		modules.add(name, this.obj());
-		this.setName(name);
-		clearActions();
+		this.setModule(true);
+		if (clear) clear();
 		return modules.ref(name);
 	}
 	
-	public ISCAD clearActions() {
+	public ISCAD clear() {
 		this.actions.clear();
 		return this;
 	}
@@ -402,6 +376,14 @@ public class SCAD4JObject implements ISCAD {
 		actions.forEach(a -> a.appendSCAD(sb));
 	};
 	
+	public boolean isModule() {
+		return isModule;
+	}
+
+	public void setModule(boolean isModule) {
+		this.isModule = isModule;
+	}
+
 	/**
 	 * Serializes the Object into SCAD commands
 	 */
@@ -409,10 +391,11 @@ public class SCAD4JObject implements ISCAD {
 	public String toString() {
 		return toString(true);
 	}
+	
 
 	public String toString(boolean withModules) {
 		StringBuffer sb = new StringBuffer();
-		if (withModules && this.getName()!=null) {
+		if (withModules && this.isModule()) {
 			this.getParent().modules().appendSCAD(null, sb);
 		}
 		

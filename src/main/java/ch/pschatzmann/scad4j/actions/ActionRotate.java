@@ -12,39 +12,15 @@ import ch.pschatzmann.scad4j.ISCAD;
  *
  */
 public class ActionRotate extends ActionTransform {
-	private Double degrees;
-	private Boolean[] v;
+	private Object degrees;
 
 	public ActionRotate(ISCAD obj) {
 		super(obj);
 	}
+	
 
-	public ActionRotate transform(double degrees) {
+	public ActionRotate transform(Object degrees) {
 		this.degrees = degrees;
-		return this;
-	}
-
-	public ActionRotate values(double x, double y, double z) {
-		super.values(x, y, z);
-		return this;
-	}
-
-	@Override
-	public ActionRotate values(double degrees[]) {
-		super.values(degrees);
-		return this;
-	}
-
-	public ActionRotate v(boolean x, boolean y, boolean z) {
-		v = new Boolean[3];
-		v[0] = x;
-		v[1] = y;
-		v[2] = z;
-		return this;
-	}
-
-	public ActionRotate v(Boolean v[]) {
-		this.v = v;
 		return this;
 	}
 
@@ -57,15 +33,6 @@ public class ActionRotate extends ActionTransform {
 			sb.append(xyz());
 		}
 
-		if (v != null) {
-			sb.append(", v=[");
-			sb.append(v[0]);
-			sb.append(",");
-			sb.append(v[1]);
-			sb.append(",");
-			sb.append(v[2]);
-			sb.append("]");
-		}
 		sb.append(") ");
 	}
 

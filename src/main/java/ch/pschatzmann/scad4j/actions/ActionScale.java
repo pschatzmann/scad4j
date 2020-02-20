@@ -8,7 +8,10 @@ public class ActionScale extends ActionTransform {
 		super(obj);
 	}
 	
-	public ActionScale values(double scale) {
+	public ActionScale values(Number scale) {
+		return (ActionScale)this.values(scale,scale,scale);
+	}
+	public ActionScale values(String scale) {
 		return (ActionScale)this.values(scale,scale,scale);
 	}
 

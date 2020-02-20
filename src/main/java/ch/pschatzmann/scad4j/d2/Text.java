@@ -24,11 +24,11 @@ public class Text extends SCAD4JObject {
 	}
 
 	private String text = "Undefined text";
-	private double size;
+	private Object size;
 	private String font;
 	private VerticallAligh verticalAligh;
 	private HorizontalAligh horizontalAligh;
-	private double spacing;
+	private Object spacing;
 	private Direction direction;
 	private String language;
 	private String script;
@@ -44,7 +44,7 @@ public class Text extends SCAD4JObject {
 		return this;
 	}
 
-	public Text size(double size) {
+	public Text size(Object size) {
 		this.size = size;
 		return this;
 	}
@@ -64,7 +64,7 @@ public class Text extends SCAD4JObject {
 		return this;
 	}
 
-	public Text spacing(double spacing) {
+	public Text spacing(Object spacing) {
 		this.spacing = spacing;
 		return this;
 	}

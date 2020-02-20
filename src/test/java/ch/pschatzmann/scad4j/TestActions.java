@@ -16,14 +16,14 @@ public class TestActions {
 		SCAD s = new SCAD();
 		ISCAD obj = s.union(
 			s.difference(
-				s.cube().size(3).center(),
-				s.sphere().radius(3)
+				s.cube().size(3.0).center(),
+				s.sphere().radius("3")
 			),
 			s.intersection(
-				s.sphere().radius(1.3),
+				s.sphere().radius("1.3"),
 				s.cube().size(2.1).center()
 			)
-		).translate().values(0.0, 0.0, 1.5).obj().scale().values(10.0).obj();
+		).translate().values("0.0", "0.0", "1.5").obj().scale().values("10.0").obj();
 		
 		System.out.println(obj);
 	}

@@ -4,13 +4,13 @@ import ch.pschatzmann.scad4j.ISCAD;
 
 public class ActionRender extends ObjectSourceAction {
 	private ISCAD obj;
-	private Double convexity;
+	private Object convexity;
 	
 	public ActionRender(ISCAD group) {
 		super(group);
 	}
 
-	public ISCAD values(double convexity) {
+	public ISCAD values(Object convexity) {
 		this.convexity = convexity;
 		return obj;
 	}

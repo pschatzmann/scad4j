@@ -9,18 +9,18 @@ import ch.pschatzmann.scad4j.ISCAD;
  *
  */
 public class ActionLinearExtrude extends ObjectSourceAction {
-	private Double height = 10.0;
-	private Double convexity;
-	private Double twist;
-	private Integer slices;
-	private Double scale;
-	private Double resolution;
+	private Object height = "10.0";
+	private Object convexity;
+	private Object twist;
+	private Object slices;
+	private Object scale;
+	private Object resolution;
 
 	public ActionLinearExtrude(ISCAD obj) {
 		super(obj);
 	}
 
-	public ActionLinearExtrude height(double height) {
+	public ActionLinearExtrude height(Object height) {
 		this.height = height;
 		return this;
 	}

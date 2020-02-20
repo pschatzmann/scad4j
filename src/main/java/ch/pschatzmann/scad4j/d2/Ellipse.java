@@ -17,8 +17,13 @@ public class Ellipse extends Circle {
 		super(scad);
 	}
 
-	public Ellipse size(double x, double y) {
-		this.diameter(x + y / 2);
+	public Ellipse size(Number x, Number y) {
+		this.diameter(x.doubleValue() + y.doubleValue() / 2.0);
+		return (Ellipse) this.resize().values(x, y).obj();
+	}
+
+	public Ellipse size(String x, String y) {
+		this.diameter(x +"+"+ y +"/ 2");
 		return (Ellipse) this.resize().values(x, y).obj();
 	}
 }

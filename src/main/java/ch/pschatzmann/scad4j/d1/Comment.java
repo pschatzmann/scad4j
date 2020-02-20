@@ -26,8 +26,8 @@ public class Comment extends SCAD4JObject {
 		appendActions(this.getActions(),sb);
 
 		if (!comment.contains("\n")) {
-		sb.append("// ");
-		sb.append(comment);
+			sb.append("// ");
+			sb.append(comment);
 		} else {
 			sb.append("/* ");
 			sb.append(comment);

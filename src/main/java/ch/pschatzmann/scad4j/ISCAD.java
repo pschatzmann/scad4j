@@ -24,6 +24,7 @@ import ch.pschatzmann.scad4j.actions.ActionScale;
 import ch.pschatzmann.scad4j.actions.ActionTranslate;
 import ch.pschatzmann.scad4j.actions.ActionUnion;
 import ch.pschatzmann.scad4j.d1.Module;
+import ch.pschatzmann.scad4j.d3.Cylinder;
 
 public interface ISCAD extends Serializable {
 
@@ -31,10 +32,12 @@ public interface ISCAD extends Serializable {
 	
 	ISCAD toModule(String name);
 	
+	ISCAD clear();
+
+	ISCAD copy();
+	
 	SCAD getParent();
 	
-	String getName();
-
 	File save(File out) throws IOException, InterruptedException;
 
 	ActionProjection projection();
@@ -83,13 +86,6 @@ public interface ISCAD extends Serializable {
 
 	BufferedImage toImage(String format) throws IOException, InterruptedException;
 
-
-	boolean isCenter();
-
-	ISCAD center(boolean value);
-
-	ISCAD center();
-
 	void appendSCAD(StringBuffer sb);
 
 	void addAction(ISCAD objectSourceAction);
@@ -111,12 +107,13 @@ public interface ISCAD extends Serializable {
 	String toString();
 	
 	String toString(boolean withModules);
-	
+		
 	default public void setEntryPoint(String ep) {}
 	
 	default public String getEntryPoint() {
 		return null;
 	}
+
 
 
 }

@@ -13,13 +13,13 @@ import ch.pschatzmann.scad4j.ISCAD;
  *
  */
 public class ActionMultimatrix extends ObjectSourceAction {
-	double matrix[][];
+	private Object matrix[][];
 
 	public ActionMultimatrix(ISCAD obj) {
 		super(obj);
 	}
 
-	public ActionMultimatrix values(double matrix[][]) {
+	public ActionMultimatrix values(Object matrix[][]) {
 		this.matrix = matrix;
 		return this;
 	}
@@ -28,14 +28,14 @@ public class ActionMultimatrix extends ObjectSourceAction {
 	public void appendSCAD(StringBuffer sb) {
 		sb.append("multmatrix(m=[");
 		boolean first1 = true;
-		for (double a[] : matrix) {
+		for (Object a[] : matrix) {
 			if (!first1) {
 				sb.append(",");
 				first1=false;				
 			}
 			sb.append("[");
 			boolean first2 = true;
-			for (double d : a) {
+			for (Object d : a) {
 				if (!first2) {
 					sb.append(",");
 					first2=false;

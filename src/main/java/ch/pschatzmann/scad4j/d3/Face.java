@@ -9,9 +9,9 @@ import java.io.Serializable;
  *
  */
 public class Face implements Serializable {
-	private double[][] faces;
+	private Object[][] faces;
 
-	public Face faces(double[][] faces) {
+	public Face faces(Object[][] faces) {
 		this.faces = faces;
 		return this;
 	}
@@ -21,7 +21,7 @@ public class Face implements Serializable {
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 		boolean comma = false;
-		for (double a[] : faces) {
+		for (Object a[] : faces) {
 			if (comma) {
 				sb.append(",");
 			}
@@ -32,11 +32,11 @@ public class Face implements Serializable {
 		return sb.toString();
 	}
 
-	private String toString(double[] array) {
+	private String toString(Object[] array) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
 		boolean comma = false;
-		for (double value : array) {
+		for (Object value : array) {
 			if (comma) {
 				sb.append(",");
 			}

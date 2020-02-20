@@ -14,37 +14,37 @@ public class Circle extends SCAD4JObject implements ICircleCommon {
 		super(scad);
 	}
 
-	private Double radius;
-	private Double diameter;
-	private Double minimumAngle;
-	private Double minimumCircumferentialLength;
-	private Double numberOfFragments;
+	private Object radius;
+	private Object diameter;
+	private Object minimumAngle;
+	private Object minimumCircumferentialLength;
+	private Object numberOfFragments;
 	private boolean comma = false;
 
-	public Circle radius(double radius) {
+	public Circle radius(Object radius) {
 		this.radius = radius;
 		return this;
 	}
 
-	public Circle diameter(double diameter) {
+	public Circle diameter(Object diameter) {
 		this.diameter = diameter;
 		return this;
 	}
 
 	@Override
-	public Circle minimumAngle(double minimumAngle) {
+	public Circle minimumAngle(Object minimumAngle) {
 		this.minimumAngle = minimumAngle;
 		return this;
 	}
 
 	@Override
-	public Circle minimumCircumferentialLength(double minimumCircumferentialLength) {
+	public Circle minimumCircumferentialLength(Object minimumCircumferentialLength) {
 		this.minimumCircumferentialLength = minimumAngle;
 		return this;
 	}
 
 	@Override
-	public Circle numberOfFragments(double numberOfFragments) {
+	public Circle numberOfFragments(Object numberOfFragments) {
 		this.numberOfFragments = numberOfFragments;
 		return this;
 	}
@@ -62,7 +62,7 @@ public class Circle extends SCAD4JObject implements ICircleCommon {
 		sb.append("); ");
 	}
 
-	protected void appendParameter(StringBuffer sb, String string, Double value) {
+	protected void appendParameter(StringBuffer sb, String string, Object value) {
 		if (value != null) {
 			if (comma) {
 				sb.append(",");

@@ -152,21 +152,6 @@ public abstract class ObjectSourceAction extends CommonAction implements ISCAD {
 	}
 
 	@Override
-	public boolean isCenter() {
-		return obj().isCenter();
-	}
-
-	@Override
-	public ISCAD center(boolean value) {
-		return obj().center(value);
-	}
-
-	@Override
-	public ISCAD center() {
-		return obj().center();
-	}
-
-	@Override
 	public void addAction(ISCAD objectSourceAction) {
 		throw new RuntimeException("Not supported");
 		

@@ -9,10 +9,11 @@ import ch.pschatzmann.scad4j.ISCAD;
  *
  */
 public interface ICircleCommon {
-	public ISCAD minimumAngle(double minimumAngle);
+	public ISCAD minimumAngle(Object minimumAngle);
 
-	public ISCAD minimumCircumferentialLength(double minimumCircumferentialLength);
+	public ISCAD minimumCircumferentialLength(Object minimumCircumferentialLength);
 
-	public ISCAD numberOfFragments(double numberOfFragments);
+	public ISCAD numberOfFragments(Object numberOfFragments);
+
 
 }

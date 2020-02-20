@@ -10,22 +10,22 @@ import ch.pschatzmann.scad4j.ISCAD;
  *
  */
 public class ActionResize extends ActionTransform {
-	Boolean autoX;
-	Boolean autoY;
-	Boolean autoZ;
+	Object autoX;
+	Object autoY;
+	Object autoZ;
 
 	public ActionResize(ISCAD obj) {
 		super(obj);
 	}
 
-	public ActionResize auto(boolean auto) {
+	public ActionResize auto(Object auto) {
 		this.autoX = auto;
 		this.autoY = auto;
 		this.autoZ = auto;
 		return this;
 	}
 
-	public ActionResize auto(boolean x, boolean y, boolean z) {
+	public ActionResize auto(Object x, Object y, Object z) {
 		this.autoX = x;
 		this.autoY = y;
 		this.autoZ = z;

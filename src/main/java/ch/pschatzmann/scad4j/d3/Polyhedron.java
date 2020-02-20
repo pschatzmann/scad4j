@@ -15,8 +15,9 @@ import ch.pschatzmann.scad4j.SCAD4JObject;
 public class Polyhedron extends SCAD4JObject {
 	private Point[] points;
 	private Face faces[];
-	private Integer convexity;
+	private Object convexity;
 	boolean addSeparator=false;
+	private boolean center;
 
 	public Polyhedron(SCAD scad) {
 		super(scad);
@@ -33,7 +34,7 @@ public class Polyhedron extends SCAD4JObject {
 
 	}
 
-	public Polyhedron convexity(int convexity) {
+	public Polyhedron convexity(Object convexity) {
 		this.convexity = convexity;
 		return this;
 	}
@@ -89,5 +90,34 @@ public class Polyhedron extends SCAD4JObject {
 			addSeparator = true;
 		}
 	}
+	
+	/**
+	 * Defines if the object is centered
+	 * @param value true if object should be centered
+	 * @return SCADObject
+	 */
+	public Polyhedron center() {
+		center = true;
+		return this;
+	}
+
+	/**
+	 * Defines if the object is centered
+	 * @param value true if object should be centered
+	 * @return SCADObject
+	 */
+	public Polyhedron center(boolean value) {
+		center = value;
+		return this;
+	}
+
+	/**
+	 * Determines if the object is centered
+	 * @return true if it is centered
+	 */
+	public boolean isCenter() {
+		return center;
+	}
+
 
 }

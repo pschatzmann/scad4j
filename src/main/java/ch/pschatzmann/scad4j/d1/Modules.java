@@ -51,9 +51,19 @@ public class Modules {
 	public Module get(String name) {
 		return map.get(name);
 	}
-	
+
 	/**
-	 * Returns the reference to the Scad Object that can be used for futher transformations
+	 * Deletes an existing module
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Module delete(String name) {
+		return map.remove(name);
+	}
+
+	/**
+	 * Returns the reference to the Scad Object that can be used for further transformations
 	 * @param name
 	 * @return
 	 */
@@ -61,7 +71,7 @@ public class Modules {
 		Module m = this.get(name);
 		if (m==null) throw new RuntimeException("Module '"+name+"' does not exist");
 		SCADObject result = m.ref();
-		result.setName(name);
+		result.setModule(true);
 		return result;
 	}
 
@@ -135,8 +145,8 @@ public class Modules {
 			scad = new StringBuffer();
 
 			// add parameters
+			scad.append(System.lineSeparator());
 			for (String name : this.parameters.getKeys()) {
-				scad.append(System.lineSeparator());
 				scad.append(name);
 				scad.append(" = ");
 				scad.append(parameters.getValue(name));

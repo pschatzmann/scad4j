@@ -68,19 +68,11 @@ public class Module {
 		}
 		// create a call to module with the proper name
 		SCADObject result = new SCADObject(scad, sb.toString());
-		result.setName(this.name);
+		result.setModule(true);
 		return result;
 	}
-//
-//	/**
-//	 *  Complete SCADObject as a module
-//	 * 
-//	 * @return
-//	 */
-//	public SCADObject obj() {
-//		return new SCADObject(scad, this.toString());
-//	}
 
+	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		this.appendSCAD(sb);

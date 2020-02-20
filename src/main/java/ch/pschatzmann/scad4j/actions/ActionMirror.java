@@ -10,25 +10,16 @@ import ch.pschatzmann.scad4j.SCAD;
  */
 
 public class ActionMirror extends ActionTransform {
-	private double x,y,z;
 	
 	public ActionMirror(ISCAD obj) {
 		super(obj);
 	}
-	
-	public ActionMirror values(double x, double y, double z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		return this;
-	}
-	
+		
 	@Override
 	public void appendSCAD(StringBuffer sb) {
 		sb.append("mirror(v=");
 		sb.append(SCAD.xyz(x,y,z));
 		sb.append(") ");
 	}
-
 
 }

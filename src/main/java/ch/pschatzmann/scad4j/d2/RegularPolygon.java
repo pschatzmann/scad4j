@@ -13,19 +13,19 @@ import ch.pschatzmann.scad4j.SCAD4JObject;
  *
  */
 public class RegularPolygon extends SCAD4JObject {
-	private double radius;
-	private int numberOfSides = 5;
+	private Object radius;
+	private Object numberOfSides = "5";
 
 	public RegularPolygon(SCAD scad) {
 		super(scad);
 	}
 
-	public RegularPolygon radius(double radius) {
+	public RegularPolygon radius(Object radius) {
 		this.radius = radius;
 		return this;
 	}
 
-	public RegularPolygon numberOfSides(int numberOfSides) {
+	public RegularPolygon numberOfSides(Object numberOfSides) {
 		this.numberOfSides = numberOfSides;
 		return this;
 	}
