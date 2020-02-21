@@ -34,5 +34,10 @@ public class CommonAction {
 	public 	ISCAD copy() {
 		return this.obj.copy();
 	}
+	
+	public ActionInclude importDocument(ISCAD incl) {
+		return this.obj.importDocument(incl);
+	}
+
 
 }

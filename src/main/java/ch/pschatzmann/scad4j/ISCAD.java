@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Optional;
 
+import ch.pschatzmann.scad4j.actions.ActionInclude;
 import ch.pschatzmann.scad4j.actions.ActionColor;
 import ch.pschatzmann.scad4j.actions.ActionDifference;
 import ch.pschatzmann.scad4j.actions.ActionHull;
@@ -77,6 +78,9 @@ public interface ISCAD extends Serializable {
 	ActionMultimatrix multimatrix();
 
 	ActionMirror mirror();
+	
+	ActionInclude importDocument(ISCAD incl) ;
+
 
 	Optional<String> findExtension(String fileName);
 

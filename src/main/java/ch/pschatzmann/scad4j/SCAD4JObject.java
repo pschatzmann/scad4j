@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import ch.pschatzmann.scad4j.actions.ActionInclude;
 import ch.pschatzmann.scad4j.actions.ActionColor;
 import ch.pschatzmann.scad4j.actions.ActionDifference;
 import ch.pschatzmann.scad4j.actions.ActionHull;
@@ -271,6 +272,18 @@ public class SCAD4JObject implements ISCAD {
 	public ActionRender render(double convexity) {
 		return new ActionRender(this);
 	}
+	
+	
+	/**
+	 * Includes the content of another object
+	 * @param incl
+	 * @return
+	 */
+	public ActionInclude importDocument(ISCAD incl) {
+		return new ActionInclude(this,incl);
+	}
+
+	
 	/**
 	 * Creates a temporay stl file and converts it to a 3D array.
 	 * @return float[][][]
@@ -383,6 +396,7 @@ public class SCAD4JObject implements ISCAD {
 	public void setModule(boolean isModule) {
 		this.isModule = isModule;
 	}
+	
 
 	/**
 	 * Serializes the Object into SCAD commands

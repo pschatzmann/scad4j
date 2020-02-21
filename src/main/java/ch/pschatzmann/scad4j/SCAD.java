@@ -17,6 +17,7 @@ import ch.pschatzmann.scad4j.d1.Group;
 import ch.pschatzmann.scad4j.d1.Import;
 import ch.pschatzmann.scad4j.d1.Modules;
 import ch.pschatzmann.scad4j.d1.Parameters;
+import ch.pschatzmann.scad4j.d1.Use;
 import ch.pschatzmann.scad4j.d2.Circle;
 import ch.pschatzmann.scad4j.d2.Ellipse;
 import ch.pschatzmann.scad4j.d2.Polygon;
@@ -537,7 +538,28 @@ public class SCAD implements Serializable {
 	 * @param file
 	 * @return
 	 */
-	public ISCAD importFile(File file) {
+	public ISCAD importDocument(File file) {
+		return new Import(this).importFile(file);
+	}
+	
+	/**
+	 * Adds a import statement
+	 * @param file
+	 * @return
+	 */
+	public ISCAD useDocument(File file) {
+		return new Use(this).importFile(file);
+	}
+	/**
+	 * Adds a import statement from a url
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 */
+	public ISCAD importDocument(URL url) throws IOException {
+		InputStream in = url.openStream();
+		File file = File.createTempFile("stl-", ".tmp");
+		Files.copy(in, Paths.get(file.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
 		return new Import(this).importFile(file);
 	}
 
@@ -547,13 +569,12 @@ public class SCAD implements Serializable {
 	 * @return
 	 * @throws IOException
 	 */
-	public ISCAD importURL(URL url) throws IOException {
+	public ISCAD useDocument(URL url) throws IOException {
 		InputStream in = url.openStream();
 		File file = File.createTempFile("stl-", ".tmp");
 		Files.copy(in, Paths.get(file.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
-		return new Import(this).importFile(file);
+		return new Use(this).importFile(file);
 	}
-
 	/**
 	 * Prints the version information
 	 */

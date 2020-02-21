@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import ch.pschatzmann.scad4j.d1.Parameters;
+import ch.pschatzmann.scad4j.format.ModuleParser;
 
 /**
  * We re-use saved SCAD code which can be loaded from a file or URL
@@ -20,11 +21,12 @@ import ch.pschatzmann.scad4j.d1.Parameters;
 public class SCADObject extends SCAD4JObject {
 	private String commands;
 	private String entryPoint;
+	private ModuleParser moduleParser = new ModuleParser();
 
 
 	public SCADObject(SCAD scad, String cmd){
 		super(scad);
-		this.commands = cmd;
+		this.setSCAD(cmd);
 	}
 
 	public SCADObject(SCAD scad) {
@@ -35,7 +37,7 @@ public class SCADObject extends SCAD4JObject {
 		StringBuilder contentBuilder = new StringBuilder();
 		Stream<String> stream = Files.lines(Paths.get(file.getAbsolutePath()));
 		stream.forEach(s -> contentBuilder.append(parameters.resolve(s)).append(System.lineSeparator()));
-		commands = contentBuilder.toString();
+		this.setSCAD(contentBuilder.toString());
 
 		return this;
 	}
@@ -50,7 +52,7 @@ public class SCADObject extends SCAD4JObject {
 			while ((inputLine = in.readLine()) != null) {
 				sb.append(parameters.resolve(inputLine)+System.lineSeparator());
 			}
-			commands = sb.toString();
+			this.setSCAD(sb.toString());
 		} finally {
 			if (in!=null) in.close();
 		}
@@ -66,7 +68,12 @@ public class SCADObject extends SCAD4JObject {
 		this.commands = scad;
 		return this;
 	}
-
+	
+//	public void resolveModules() {
+//		moduleParser.parse(this.getParent(), this.commands);
+//		this.setSCAD(moduleParser.getContent());
+//	}
+//
 	/**
 	 * Returns the SCAD Commands
 	 * @return
@@ -83,7 +90,7 @@ public class SCADObject extends SCAD4JObject {
 			sb.append(parameters.resolve(str)+System.lineSeparator());
 		}
 		
-		this.commands = sb.toString();
+		this.setSCAD(sb.toString());
 		return this;
 	}
 	
